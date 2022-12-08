@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <title>Kontakt</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Style the body */
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+    }
+
+    /* Logo/název */
+    .title {
+      padding: 75px;
+      text-align: center;
+      background: #1abc9c;
+      color: #fff;
+    }
+
+    /* Hlavní titul */
+    .title h1 {
+      font-size: 60px;
+    }
+
+    /* Hlavní podtitul */
+    .title p {
+      font-size: 30px;
+    }
+
+
+    /* Styl horního navigačního panelu */
+    .navbar {
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    /* Styl odkazů v navigačním panelu */
+    .navbar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    /* Odkazy zarovnané vpravo */
+    .navbar a.right {
+      float: right;
+    }
+
+    /* Změň barvu při projetí nad ním */
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Column container */
+    .row {
+      display: -ms-flexbox;
+      /* IE10 */
+      display: flex;
+      -ms-flex-wrap: wrap;
+      /* IE10 */
+      flex-wrap: wrap;
+    }
+
+
+    /* Postraní panel vlevo */
+    .side {
+      -ms-flex: 30%;
+      /* IE10 */
+      flex: 30%;
+      background-color: #f1f1f1;
+      padding: 20px;
+    }
+
+    /* Hlavní panel */
+    .main {
+      -ms-flex: 70%;
+      /* IE10 */
+      flex: 70%;
+      background-color: white;
+      padding: 20px;
+    }
+
+    /* Falešný obrázek, jen pro ukázku */
+    .fakeimg {
+      background-color: #aaa;
+      width: 100%;
+      padding: 20px;
+    }
+
+    /* Zápatí */
+    .footer {
+      padding: 20px;
+      text-align: center;
+      background: #ddd;
+    }
+
+    /* Reaktivní layout - když šířka obrazovky je méně než 700px, panely se poskládají nad sebe */
+    @media screen and (max-width: 700px) {
+      .row {
+        flex-direction: column;
+      }
+    }
+
+    /* Reaktivní layout - když šířka obrazovky je méně než 400px, odkazy se poskládají nad sebe */
+    @media screen and (max-width: 400px) {
+      .navbar a {
+        float: none;
+        width: 100%;
+      }
+    }
+  </style>
+  <script src="myScript.js"></script>
+
+</head>
+
+
+
+<!-- Začátek těla -->
+
+<body>
+
+  <div class="title">
+    <h1>Cyklo Janský</h1>
+    <p>Servis kol</p>
+  </div>
+
+  <!-- navigační panel -->
+  <div class="row">
+    <div class="side">
+      <h2>Kontakt</h2>
+
+      <p id="myText">Hello World</p>
+      <button class="btn" onclick="myFunction()">Copy!</button>
+
+      <img src="images/Gmail_logo_256px.png" style="width: 50px; height: 50px">
+
+      <span><b>kontakt.kolajansky.cz</b></span>
+      <h5></h5>
+      <img src="images/Facebook_icon.png" style="width: 50px; height: 50px">
+      <span><b>kontakt.kolajansky.cz</b></span>
+    </div>
+    <div class="main">
+      <h2>TITLE HEADING</h2>
+      <h5>Title description, Dec 7, 2017</h5>
+      <div class="fakeimg" style="height:200px;">Image</div>
+      <p>Some text..</p>
+      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+      </p>
+      <br>
+      <h2>TITLE HEADING</h2>
+      <h5>Title description, Sep 2, 2017</h5>
+      <div class="fakeimg" style="height:200px;">Image</div>
+      <p>Some text..</p>
+      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+      </p>
+    </div>
+  </div>
+
+  <div>
+
+  </div>
+
+  <div class="footer">
+    <h2>Footer</h2>
+  </div>
+
+</body>
+
+</html>
