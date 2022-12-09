@@ -84,22 +84,18 @@ body {
 
 .side a:link {
     text-decoration: none;
-    color: #222;
 }
 
 .side a:visited {
     text-decoration: none;
-    color: #222;
 }
 
 .side a:hover {
     text-decoration: none;
-    color: #222;
 }
 
 .side a:active {
     text-decoration: none;
-    color: #222;
 }
 
 .side h1 {
@@ -107,7 +103,7 @@ body {
 }
 
 .side p {
-    color: #333;
+    color: #222;
     font-weight: bold;
 }
 
