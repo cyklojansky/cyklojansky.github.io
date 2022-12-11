@@ -107,19 +107,43 @@ body {
 /* Zápatí */
 .footer {
     padding: 20px;
-    text-align: center;
+    height: 100px;
     background: #333;
     color: #bbb;
+    vertical-align: baseline;
+    /*justify-content: center;*/
 }
+
+.footer span {
+    float: left;
+    padding: 20px;
+    vertical-align: baseline;
+}
+
 
 .footer h4 {
+    float: left;
+    padding: 20px;
     font-size: 15px;
+    vertical-align: baseline;
+    /* top right bottom left */
+    margin: 0px 10px 0px 10px;
 }
 
-.footer span,
+.footer h5 {
+    float: left;
+    padding: 20px;
+    font-size: 15px;
+    vertical-align: baseline;
+    /* top right bottom left */
+    margin: 0px 10px 0px 10px;
+}
+
 .footer img {
-    display: inline-block;
-    vertical-align: middle;
-    padding: 0px 20px;
-
+    float: left;
+    padding: 20px;
+    vertical-align: baseline;
+    /* top right bottom left */
+    margin: 10px 10px 10px 10px;
 }
+
