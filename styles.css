@@ -35,13 +35,13 @@ body {
 
 /* Reaktivní layout - když šířka obrazovky je méně než 700px, panely se poskládají nad sebe */
 @media screen and (max-width: 950px) {
-    .row {
+    .side {
         flex-direction: column;
     }
 }
 
 /* Column container */
-.row {
+.side {
     display: -ms-flexbox;
     /* IE10 */
     display: flex;
@@ -104,46 +104,4 @@ body {
 }
 
 
-/* Zápatí */
-.footer {
-    padding: 20px;
-    height: 100px;
-    background: #333;
-    color: #bbb;
-    vertical-align: baseline;
-    /*justify-content: center;*/
-}
-
-.footer span {
-    float: left;
-    padding: 20px;
-    vertical-align: baseline;
-}
-
-
-.footer h4 {
-    float: left;
-    padding: 20px;
-    font-size: 15px;
-    vertical-align: baseline;
-    /* top right bottom left */
-    margin: 0px 10px 0px 10px;
-}
-
-.footer h5 {
-    float: left;
-    padding: 20px;
-    font-size: 15px;
-    vertical-align: baseline;
-    /* top right bottom left */
-    margin: 0px 10px 0px 10px;
-}
-
-.footer img {
-    float: left;
-    padding: 20px;
-    vertical-align: baseline;
-    /* top right bottom left */
-    margin: 10px 10px 10px 10px;
-}
 

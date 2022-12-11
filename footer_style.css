@@ -1,0 +1,67 @@
+.footer {
+  background: #333333;
+  padding: 5px 0px;
+  height: auto;
+  width: 100%;
+}
+
+.footer-left {
+  font-size: 15px;
+}
+
+.footer-left p {
+  margin: 20px 0px;
+  text-align: center;
+  vertical-align: sub;
+  color: #777777;
+  font-weight: 500;
+}
+.footer-left p b {
+  font-weight: 900;
+}
+
+.footer-right {
+  font-size: 17px;
+}
+
+.footer-right p {
+  margin: 20px 0px;
+  font-size: 15px;
+  text-align: center;
+  vertical-align: sub;
+  color: #777777;
+
+  font-weight: 500;
+}
+
+/* Mady by C2Coder */
+.footer-right p b {
+  color: #888888;
+}
+
+.footer-right p b:hover {
+  color: #aaaaaa;
+}
+
+/* Github logo */
+.footer-right p i {
+  color: #888888;
+  font-size: 24px;
+  vertical-align: sub;
+}
+.footer-right p i:hover {
+  color: #aaaaaa;
+}
+
+.footer-right p a:link {
+  text-decoration: none;
+}
+.footer-right p a:visited {
+  text-decoration: none;
+}
+.footer-right p a:hover {
+  text-decoration: none;
+}
+.footer-right p a:active {
+  text-decoration: none;
+}
