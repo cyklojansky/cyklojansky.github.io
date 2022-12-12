@@ -1,67 +1,70 @@
+/* Footer class */
 .footer {
-  background: #333333;
+  background: #333;
   padding: 5px 0px;
   height: auto;
   width: 100%;
 }
 
-.footer-left {
-  font-size: 15px;
+/* Copyright Cyklojansky.cz */
+.footer-top {
+  font-size: 16px;
 }
-
-.footer-left p {
+.footer-top p {
   margin: 20px 0px;
   text-align: center;
   vertical-align: sub;
-  color: #777777;
-  font-weight: 500;
+  color: #666;
+  font-weight: 600;
 }
-.footer-left p b {
+
+/* Bold Copyright */
+.footer-top p b {
   font-weight: 900;
 }
 
-.footer-right {
-  font-size: 17px;
-}
-
-.footer-right p {
-  margin: 20px 0px;
+/* Mady by C2Coder */
+.footer-bottom {
   font-size: 15px;
+}
+.footer-bottom p {
+  margin: 20px 0px;
+  font-size: 12px;
   text-align: center;
   vertical-align: sub;
-  color: #777777;
+  color: #666;
 
   font-weight: 500;
 }
 
-/* Mady by C2Coder */
-.footer-right p b {
-  color: #888888;
+.footer-bottom p b {
+  color: #777;
 }
 
-.footer-right p b:hover {
-  color: #aaaaaa;
+.footer-bottom p b:hover {
+  color: #999;
 }
 
 /* Github logo */
-.footer-right p i {
-  color: #888888;
-  font-size: 24px;
+.footer-bottom p i {
+  color: #777;
+  font-size: 20px;
   vertical-align: sub;
 }
-.footer-right p i:hover {
-  color: #aaaaaa;
+.footer-bottom p i:hover {
+  color: #999;
 }
 
-.footer-right p a:link {
+/* Link without underline */
+.footer-bottom p a:link {
   text-decoration: none;
 }
-.footer-right p a:visited {
+.footer-bottom p a:visited {
   text-decoration: none;
 }
-.footer-right p a:hover {
+.footer-bottom p a:hover {
   text-decoration: none;
 }
-.footer-right p a:active {
+.footer-bottom p a:active {
   text-decoration: none;
 }
