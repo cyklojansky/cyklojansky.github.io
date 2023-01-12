@@ -13,28 +13,17 @@ body {
   background-color: #aaa;
   width: 100%;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 /* Logo/název */
 .title {
   position: relative;
-  padding: 70px;
   text-align: center;
   background: #505050;
   color: #fff;
 }
 
-/* Hlavní titul */
-.title h1 {
-  font-size: 60px;
-}
-
-.title img {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-}
 
 
 
