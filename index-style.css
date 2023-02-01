@@ -6,6 +6,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
+  height: 100vh;
 }
 
 /* Falešný obrázek, jen pro ukázku */
@@ -114,4 +115,10 @@ span h4:hover {
 }
 .main h5 {
   font-size: 14px;
+}
+
+
+
+.content dl ul p{
+  vertical-align: middle;
 }
