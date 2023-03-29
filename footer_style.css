@@ -24,6 +24,23 @@
   font-weight: 900;
 }
 
+/* IČ & Text*/
+.footer-middle {
+  font-size: 14px;
+}
+.footer-middle p {
+  margin: 8px 0px;
+  text-align: center;
+  vertical-align: sub;
+  color: #666;
+  font-weight: 600;
+}
+
+/* Bold Copyright */
+.footer-middle p b {
+  font-weight: 900;
+}
+
 /* Mady by C2Coder */
 .footer-bottom {
   font-size: 15px;

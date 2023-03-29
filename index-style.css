@@ -18,20 +18,29 @@ body {
 }
 
 /* Logo/název */
-.title {
+.logo {
   position: relative;
   text-align: center;
   background: #505050;
   color: #fff;
+  
+}
+.logo img {
+  height: 400px;
+  width: 400px;
 }
 
 
 
 
 /* Reaktivní layout - když šířka obrazovky je méně než 700px, panely se poskládají nad sebe */
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1175px) {
     .side {
         flex-direction: column;
+    }
+    .logo img{
+      height: 300px;
+      width: 300px;
     }
 }
 
