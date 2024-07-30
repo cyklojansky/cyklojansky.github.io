@@ -231,7 +231,7 @@ def lenght(str: str, length: int, mode: str = "e"):
 def make_txt():
     os.system("rm seznam-náhradního-spotřebního-materiálu.txt")
     with open("seznam-náhradního-spotřebního-materiálu.txt", "x+") as f:
-        f.write("Cyklo Janský - seznam náhradních dílů\n")
+        f.write("Cyklo Janský - seznam náhradního spotřebního materiálu\n")
         f.write("https://www.cyklojansky.cz/\n")
 
         for group, d in data.items():
@@ -279,6 +279,6 @@ if args.download:
 
 if args.excel or args.txt:
     passwd = input("Password: ")
-    
+
     os.system(f'zip -P {passwd} seznam-náhradního-spotřebního-materiálu.zip {"seznam-náhradního-spotřebního-materiálu.xlsx" if args.excel else ""} {"seznam-náhradního-spotřebního-materiálu.txt" if args.txt else ""}')
 
