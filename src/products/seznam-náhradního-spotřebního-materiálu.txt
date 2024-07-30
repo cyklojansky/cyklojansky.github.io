@@ -1,0 +1,16 @@
+Cyklo Janský - seznam náhradních dílů
+https://www.cyklojansky.cz/
+
+==== Čisticí prostředky, cyklokosmetika ====
+6525        CYKLO STAR "E-bike" 500ml rozprašovač                                          159 Kč/Ks     0 Ks        ean: 8594008597881
+2337        CYKLO STAR kohout výpustný DIN60                                               269 Kč/Ks     1 Ks        ean: 
+6591        CYKLO STAR "original extra carbon new" 1000ml náplň                          181.5 Kč/Ks     3 Ks        ean: 8594008597393
+6592        CYKLO STAR "original extra carbon new" 2000ml náplň                            337 Kč/Ks     0 Ks        ean: 8595677700114
+6593        CYKLO STAR "original extra carbon new" 5000ml náplň                            790 Kč/Ks     0 Ks        ean: 8595677700138
+6590        CYKLO STAR "original extra carbon new" 500ml rozprašovač                     158.5 Kč/Ks     3 Ks        ean: 8594008597386
+6532        CYKLO STAR "performance & servis" 2000ml náplň                                 353 Kč/Ks     0 Ks        ean: 8595677700121
+6533        CYKLO STAR "performance & servis" 5000ml náplň                               830.5 Kč/Ks     3 Ks        ean: 8595677700145
+6530        CYKLO STAR "performance & servis" 500ml rozprašovač                            166 Kč/Ks     2 Ks        ean: 8595677700107
+
+==== test ====
+FD426G1652  Desky brzdové GALFER FD426 E-bike/DH polymer, s pružinkou, pro SHIMANO M8120           541 Kč/Ks     2 Ks        ean: 

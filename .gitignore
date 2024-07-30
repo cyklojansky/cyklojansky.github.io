@@ -1,0 +1,8 @@
+venv
+node_modules/
+build/
+old/
+not-used/
+frp*
+src/products/*.xlsx
+!src/products/cyklojansky-seznam-náhradních-dílů.xlsx
