@@ -37,8 +37,10 @@ def main():
     shutil.copytree("src/assets", "build/assets")
     shutil.copytree("src/download", "build/download")
 
-    shutil.copy("src/products/seznam-náhradního-spotřebního-materiálu.xlsx", "build/download/seznam-náhradního-spotřebního-materiálu.xlsx")
-    shutil.copy("src/products/seznam-náhradního-spotřebního-materiálu.txt",  "build/download/seznam-náhradního-spotřebního-materiálu.txt" )
+    # shutil.copy("src/products/seznam-náhradního-spotřebního-materiálu.xlsx", "build/download/seznam-náhradního-spotřebního-materiálu.xlsx")
+    # shutil.copy("src/products/seznam-náhradního-spotřebního-materiálu.txt",  "build/download/seznam-náhradního-spotřebního-materiálu.txt" )
+    
+    shutil.copy("src/products/seznam-náhradního-spotřebního-materiálu.zip", "build/download/seznam-náhradního-spotřebního-materiálu.zip")
 
     shutil.copytree("src/products/product-images", "build/product-images")
 

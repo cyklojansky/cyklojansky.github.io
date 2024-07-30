@@ -29,7 +29,7 @@ source_df = pd.read_excel(get_excel_files()[
 def clean():
     os.system("rm seznam-náhradního-spotřebního-materiálu.xlsx")
     os.system("rm seznam-náhradního-spotřebního-materiálu.txt")
-    os.system("rm -rf product-images")
+    # os.system("rm -rf product-images")
 
 
 def download_images(folder: str = "product-images"):
@@ -77,7 +77,7 @@ def make_excel():
         c = 0
         for product in products:
             d.append({"SKU": product["sku"], "Obrázek": create_picture_link(product["sku"]), "Název": f'{product["name"]}', "Cena za jednotku": f'{product["native_retail_price"]} Kč/{product["unit_name"]}',
-                      'Skladem': f'{int(product["quantity"])} {product["unit_name"]}', "EAN": f'{product["article_number_type"].upper()}: {int(float(product["article_number"]))}' if product["article_number"] == product["article_number"] else ''})
+                       "EAN": f'{product["article_number_type"].upper()}: {int(float(product["article_number"]))}' if product["article_number"] == product["article_number"] else ''})
             c += 1
 
         group_cols[group] = c
@@ -97,40 +97,7 @@ def make_excel():
             bottom=Side(style='thin')
         )
 
-        _products = []
-        products = []
-        for d in list(data.values()):
-            _products.extend(d)
 
-        for _p in _products:
-            _p: dict
-
-            # reorder columns
-            for key in ["sku", "group", "name", "native_retail_price", "unit_name", "quantity", "article_number_type", "article_number"]:
-                _p[key] = _p.pop(key)
-
-            _ = [_p.pop(key) for key in ['picture'] if key in _p]
-
-            p = {"SKU": _p["sku"],
-                 "Group": _p["group"],
-                 "Name": _p["name"],
-                 "Formated price": f'{_p["native_retail_price"]} Kč/{_p["unit_name"]}',
-                 "Price": f'{float(_p["native_retail_price"])}',
-                 "Unit": _p["unit_name"],
-                 "Quantity": f'{_p["quantity"]} {_p["unit_name"]}',
-                 "Global number type": _p["article_number_type"],
-                 "Global number": _p["article_number"], }
-
-            products.append(p)
-
-        # Products list
-        products_df = pd.DataFrame(products)
-        products_df.to_excel(writer, sheet_name="Produkty", index=False)
-        sheet = workbook["Produkty"]
-
-        # Adjust column widths
-        for col, width in {"A": 15, "B": 40, "C": 75, "D": 15, "E": 15, "F": 12, "G": 15, "H": 25, "I": 25}.items():
-            sheet.column_dimensions[col].width = width
 
         # Categories
         for key, df in dataFrames.items():
@@ -159,11 +126,14 @@ def make_excel():
                     sheet[f"{chr(ord('A')+x)}{y+2}"].alignment = Alignment(
                         horizontal="center" if x <= 1 else "left", vertical="center")
 
+
+
+
         # Calculator
-        n = 20
+        n = 40
         calc_d = {"SKU": [""]*n,
                   "Název":            [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 2, FALSE), "")' for i in range(n)],
-                  "Skladem":          [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 7, FALSE), "")' for i in range(n)],
+                  #"Skladem":          [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 7, FALSE), "")' for i in range(n)],
                   "Cena za jednotku": [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 4, FALSE), "")' for i in range(n)],
                   "Potřebuji":        [""]*n,
                   "Cena celkem":      [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, \"#\"),Produkty!A:H, 5, FALSE)*E{i+2}, 0)' for i in range(n)], }
@@ -173,20 +143,21 @@ def make_excel():
 
         sheet = workbook["Kalkulačka nákladů"]
 
-        sheet.cell(row=2, column=8).value = "Cena celkem:"
-        sheet.cell(row=2, column=9).value = f"=SUM(F2:F{n+1})"
+        sheet.cell(row=2, column=7).value = "Cena celkem:"
+        sheet.cell(row=2, column=8).value = f"=SUM(F2:F{n+1})"
 
-        sheet.cell(row=row+2, column=9).style = price_style
+        sheet.cell(row=2, column=8).style = price_style
 
         for row in range(n):
-            sheet.cell(row=row+2, column=6).style = price_style
+            sheet.cell(row=row+2, column=5).style = price_style
 
         # fill_color = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
         # for row in range(n):
         #     sheet.cell(row=row+2, column=1).fill = fill_color
 
         # Adjust column widths
-        for col, width in {"A": 15, "B": 75, "C": 12, "D": 20, "E": 12, "F": 15, "G": 5, "H": 15, "I": 15}.items():
+        #for col, width in {"A": 15, "B": 75, "C": 12, "D": 20, "E": 12, "F": 15, "G": 5, "H": 15, "I": 15}.items():
+        for col, width in {"A": 15, "B": 75, "C": 20, "D": 12, "E": 15, "F": 5, "G": 15, "H": 12}.items():
             sheet.column_dimensions[col].width = width
 
         for row in range(n+1):
@@ -204,10 +175,45 @@ def make_excel():
                 fill_color = PatternFill(
                     start_color="EEEEEE", end_color="EEEEEE", fill_type="solid")
 
-            for x in range(6):
+            for x in range(5):
                 cell = sheet.cell(row=y+2, column=x+1)
                 cell.border = thin_border
                 cell.fill = fill_color
+
+
+
+        # Products list
+        _products = []
+        products = []
+        for d in list(data.values()):
+            _products.extend(d)
+
+        for _p in _products:
+            _p: dict
+
+            _ = [_p.pop(key) for key in ['picture'] if key in _p]
+
+            p = {"SKU": _p["sku"],
+                 "Group": _p["group"],
+                 "Name": _p["name"],
+                 "Formated price": f'{_p["native_retail_price"]} Kč/{_p["unit_name"]}',
+                 "Price": f'{str(float(_p["native_retail_price"])).replace(".", ",")}',
+                 "Unit": _p["unit_name"],
+                 #"Quantity": f'{_p["quantity"]} {_p["unit_name"]}',
+                 "Global number type": _p["article_number_type"],
+                 "Global number": _p["article_number"], }
+
+            products.append(p)
+
+        # Products list
+        products_df = pd.DataFrame(products)
+        products_df.to_excel(writer, sheet_name="Produkty", index=False)
+        sheet = workbook["Produkty"]
+
+        # Adjust column widths
+        for col, width in {"A": 15, "B": 40, "C": 75, "D": 15, "E": 15, "F": 12, "G": 15, "H": 25, "I": 25}.items():
+            sheet.column_dimensions[col].width = width
+
 
 # make a string of length (more than lenght of the input string)
 
@@ -269,3 +275,10 @@ if args.txt:
 if args.download:
     print("Downloading images...")
     download_images()
+
+
+if args.excel or args.txt:
+    passwd = input("Password: ")
+    
+    os.system(f'zip -P {passwd} seznam-náhradního-spotřebního-materiálu.zip {"seznam-náhradního-spotřebního-materiálu.xlsx" if args.excel else ""} {"seznam-náhradního-spotřebního-materiálu.txt" if args.txt else ""}')
+

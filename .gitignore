@@ -4,5 +4,5 @@ build/
 old/
 not-used/
 frp*
-src/products/*.xlsx
-!src/products/seznam-náhradního-spotřebního-materiálu.xlsx
+src/products/*xlsx
+src/products/*txt
