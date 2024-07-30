@@ -5,4 +5,4 @@ old/
 not-used/
 frp*
 src/products/*.xlsx
-!src/products/cyklojansky-seznam-náhradních-dílů.xlsx
+!src/products/seznam-náhradního-spotřebního-materiálu.xlsx
