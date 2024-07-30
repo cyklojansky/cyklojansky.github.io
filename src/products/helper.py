@@ -44,7 +44,7 @@ def download_images(folder: str = "product-images"):
 
 def create_picture_link(img: str):
     # return f"https://cdn.statically.io/gh/cyklojansky/cyklojansky.github.io/main/excel/product-images/{img}.webp"
-    return f"https://cdn.statically.io/img/cyklojansky.cz/product-images/{img}.webp"
+    return f"https://cdn.statically.io/gh/cyklojansky/cyklojansky.github.io/gh-pages/product-images/{img}.webp"
 
 
 def make_excel():
