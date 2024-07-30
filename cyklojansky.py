@@ -42,6 +42,8 @@ def main():
 
     shutil.copytree("src/products/product-images", "build/product-images")
 
+    shutil.copy("CNAME", "build/CNAME")
+
 
 
 if __name__ == "__main__":
