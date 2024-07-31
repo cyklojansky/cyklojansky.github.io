@@ -18,12 +18,11 @@ col_widths = {"A": 20, "B": 15, "C": 75, "D": 20, "E": 15, "F": 20}
 row_heights = 20
 
 
-def get_excel_files():
+def get_csv_files():
     files = os.listdir()
-    return [f for f in files if ".xlsx" in f and "seznam-náhradního-spotřebního-materiálu" not in f]
+    return [f for f in files if ".csv" in f]
 
-source_df = pd.read_excel(get_excel_files()[
-    0], sheet_name='petrjansky1-inventory_items(3)')
+source_df = pd.read_csv(get_csv_files()[0])
 
 
 def clean():
@@ -49,27 +48,26 @@ def create_picture_link(img: str):
 
 def make_excel():
     os.system("rm seznam-náhradního-spotřebního-materiálu.xlsx")
-    keys_to_pop = ['vat_rate', 'suggest_for', 'Sloupec1', 'native_purchase_price', 'supply_type', 'private_note',
-               'track_quantity', 'min_quantity', 'max_quantity', 'allow_below_zero', 'average_native_purchase_price']
 
-    for y in range(1, source_df.shape[0]):
-        row = source_df.iloc[y].to_dict()
-        _ = [row.pop(key) for key in keys_to_pop if key in row]
+    source = source_df.to_dict( orient='records')
 
-        if row["picture"] == row["picture"]:
-            to_download.append([row["picture"], row["sku"]])
+    for s in source:
+        s: dict[str, str]
+        group = ""
+        if s["private_note"] == s["private_note"] and s["private_note"].count("_") > 1:
+            group = s["private_note"].split("_")[1]
 
-        if row["group"] == row["group"]:  # group not empty
-            if not row["group"] in data.keys():
-                data[row["group"]] = []
+        if group == "":
+            continue
 
-            if row["article_number"] == row["article_number"]:
-                row["article_number"] = str(int(row["article_number"]))
-
-            if row["native_retail_price"] == row["native_retail_price"]:
-                row["native_retail_price"] = float(row["native_retail_price"])
-
-            data[row["group"]].append(row)
+        if not group in data.keys():
+            data[group] = []
+        if s["article_number"] == s["article_number"]:
+            s["article_number"] = str(int(s["article_number"]))
+        if s["native_retail_price"] == s["native_retail_price"]:
+            s["native_retail_price"] = float(s["native_retail_price"])
+        s["group"] = group
+        data[group].append(s)
 
     for group, products in data.items():
         d: list = []

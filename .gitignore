@@ -6,3 +6,4 @@ not-used/
 frp*
 src/products/*xlsx
 src/products/*txt
+src/products/*csv
