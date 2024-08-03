@@ -6,6 +6,7 @@ import pathlib
 import shutil
 import argparse
 from openpyxl.styles import Alignment, Font, NamedStyle, PatternFill, Border, Side
+from datetime import datetime
 
 to_download: list = []  # [ [ URL, file_name ] ]
 
@@ -14,8 +15,11 @@ dataFrames: dict = {}
 
 group_cols = {}  # number of columns in each group
 
-col_widths = {"A": 20, "B": 15, "C": 75, "D": 20, "E": 15, "F": 20}
+# categories
+col_widths = {"A": 20, "B": 15, "C": 75, "D": 20, "E": 25, "F": 20}
 row_heights = 20
+
+update_time = datetime.now().strftime("%d.%m.%Y")
 
 
 def get_csv_files():
@@ -24,6 +28,18 @@ def get_csv_files():
 
 source_df = pd.read_csv(get_csv_files()[0])
 
+
+def has_image(sku: str = "", key: str = "", row: int = -1):
+    images = os.listdir(f"product-images")
+    if sku != "":
+        return f"{sku}.webp" in images
+
+    if key != "" and row != -1:
+        if key in data.keys():
+            return f"{data[key][row]['sku']}.webp" in images
+        
+    return False
+    
 
 def clean():
     os.system("rm seznam-náhradního-spotřebního-materiálu.xlsx")
@@ -47,6 +63,7 @@ def create_picture_link(img: str):
 
 
 def make_excel():
+    
     os.system("rm seznam-náhradního-spotřebního-materiálu.xlsx")
 
     source = source_df.to_dict( orient='records')
@@ -74,7 +91,7 @@ def make_excel():
 
         c = 0
         for product in products:
-            d.append({"SKU": product["sku"], "Obrázek": create_picture_link(product["sku"]), "Název": f'{product["name"]}', "Cena za jednotku": f'{product["native_retail_price"]} Kč/{product["unit_name"]}',
+            d.append({"SKU": product["sku"], "Obrázek": create_picture_link(product["sku"]) if has_image(product["sku"]) else "", "Název": f'{product["name"]}', "Cena za jednotku": f'{product["native_retail_price"]} Kč/{product["unit_name"]}', f"Skladem k {update_time}": f'{product["quantity"]} {product["unit_name"]}',
                        "EAN": f'{product["article_number_type"].upper()}: {int(float(product["article_number"]))}' if product["article_number"] == product["article_number"] else ''})
             c += 1
 
@@ -85,7 +102,7 @@ def make_excel():
     with pd.ExcelWriter("seznam-náhradního-spotřebního-materiálu.xlsx", engine="openpyxl") as writer:
         workbook = writer.book
 
-        price_style = NamedStyle(name="price_style", number_format='0" Kč"', fill=PatternFill(
+        price_style = NamedStyle(name="price_style", number_format='0.0" Kč"', fill=PatternFill(
             start_color="00FF00", end_color="00FF00"))
         
         thin_border = Border(
@@ -112,11 +129,12 @@ def make_excel():
 
             # Add hyperlinks to pictures
             for row in range(group_cols[key]):
-                pic_cell = sheet.cell(row=row+2, column=2)
-                pic_cell.hyperlink = pic_cell.value
-                pic_cell.value = "Odkaz"  # Text to display
-                # Style the hyperlink
-                pic_cell.font = Font(color="000000", underline="single")
+                if has_image(key=key, row=row):
+                    pic_cell = sheet.cell(row=row+2, column=2)
+                    pic_cell.hyperlink = pic_cell.value
+                    pic_cell.value = "Odkaz"  # Text to display
+                    # Style the hyperlink
+                    pic_cell.font = Font(color="000000", underline="single")
 
             # Alignment
             for y in range(group_cols[key]):
@@ -128,10 +146,12 @@ def make_excel():
 
 
         # Calculator
+
+
         n = 40
         calc_d = {"SKU": [""]*n,
                   "Název":            [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 2, FALSE), "")' for i in range(n)],
-                  #"Skladem":          [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 7, FALSE), "")' for i in range(n)],
+                  f"Skladem k {update_time}":          [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 7, FALSE), "")' for i in range(n)],
                   "Cena za jednotku": [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 4, FALSE), "")' for i in range(n)],
                   "Potřebuji":        [""]*n,
                   "Cena celkem":      [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, \"#\"),Produkty!A:H, 5, FALSE)*E{i+2}, 0)' for i in range(n)], }
@@ -141,21 +161,21 @@ def make_excel():
 
         sheet = workbook["Kalkulačka nákladů"]
 
-        sheet.cell(row=2, column=7).value = "Cena celkem:"
-        sheet.cell(row=2, column=8).value = f"=SUM(F2:F{n+1})"
+        sheet.cell(row=2, column=8).value = "Cena celkem:"
+        sheet.cell(row=2, column=9).value = f"=SUM(F2:F{n+1})"
 
-        sheet.cell(row=2, column=8).style = price_style
+        sheet.cell(row=2, column=9).style = price_style
 
         for row in range(n):
-            sheet.cell(row=row+2, column=5).style = price_style
+            sheet.cell(row=row+2, column=6).style = price_style
 
         # fill_color = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
         # for row in range(n):
         #     sheet.cell(row=row+2, column=1).fill = fill_color
 
         # Adjust column widths
-        #for col, width in {"A": 15, "B": 75, "C": 12, "D": 20, "E": 12, "F": 15, "G": 5, "H": 15, "I": 15}.items():
-        for col, width in {"A": 15, "B": 75, "C": 20, "D": 12, "E": 15, "F": 5, "G": 15, "H": 12}.items():
+        for col, width in {"A": 15, "B": 75, "C": 25, "D": 20, "E": 12, "F": 15, "G": 5, "H": 15, "I": 15}.items():
+        #for col, width in {"A": 15, "B": 75, "C": 20, "D": 12, "E": 15, "F": 5, "G": 15, "H": 12}.items():
             sheet.column_dimensions[col].width = width
 
         for row in range(n+1):
@@ -173,7 +193,7 @@ def make_excel():
                 fill_color = PatternFill(
                     start_color="EEEEEE", end_color="EEEEEE", fill_type="solid")
 
-            for x in range(5):
+            for x in range(6):
                 cell = sheet.cell(row=y+2, column=x+1)
                 cell.border = thin_border
                 cell.fill = fill_color
@@ -195,9 +215,9 @@ def make_excel():
                  "Group": _p["group"],
                  "Name": _p["name"],
                  "Formated price": f'{_p["native_retail_price"]} Kč/{_p["unit_name"]}',
-                 "Price": f'{str(float(_p["native_retail_price"])).replace(".", ",")}',
+                 "Price": float(_p["native_retail_price"]),
                  "Unit": _p["unit_name"],
-                 #"Quantity": f'{_p["quantity"]} {_p["unit_name"]}',
+                 "Quantity": f'{_p["quantity"]} {_p["unit_name"]}',
                  "Global number type": _p["article_number_type"],
                  "Global number": _p["article_number"], }
 
@@ -231,6 +251,10 @@ def make_txt():
     with open("seznam-náhradního-spotřebního-materiálu.txt", "x+") as f:
         f.write("Cyklo Janský - seznam náhradního spotřebního materiálu\n")
         f.write("https://www.cyklojansky.cz/\n")
+        f.write("\n")
+        f.write(f"Poslední aktualizace: {update_time}")
+        f.write("\n")
+
 
         for group, d in data.items():
             f.write("\n")
@@ -238,7 +262,7 @@ def make_txt():
 
             for p in d:
 
-                f.write(f"{lenght(p['sku'], 10)}  ") # SKU
+                f.write(f"{lenght(p['sku'], 20)}  ") # SKU
                 f.write(f"{lenght(p['name'], 70)}  ") # Name
                 f.write(f"{lenght(str(float(p['native_retail_price'])).replace(".0", ""), 10, "s")} Kč/{p['unit_name']} ") # Price
                 f.write(f"{lenght(str(int(p['quantity'])), 5, "s")} {p['unit_name']} ") # Quantity
@@ -255,6 +279,8 @@ parser.add_argument('--download', action='store_true',
                     help='A boolean flag to download images')
 parser.add_argument('--clean', action='store_true',
                     help='A boolean flag to clean files')
+parser.add_argument('--zip', action='store_true',
+                    help='A boolean flag to zip files')
 args = parser.parse_args()
 
 if args.clean:
@@ -275,7 +301,7 @@ if args.download:
     download_images()
 
 
-if args.excel or args.txt:
+if args.zip:
     passwd = input("Password: ")
 
     os.system(f'zip -P {passwd} seznam-náhradního-spotřebního-materiálu.zip {"seznam-náhradního-spotřebního-materiálu.xlsx" if args.excel else ""} {"seznam-náhradního-spotřebního-materiálu.txt" if args.txt else ""}')
