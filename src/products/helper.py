@@ -7,6 +7,9 @@ import shutil
 import argparse
 from openpyxl.styles import Alignment, Font, NamedStyle, PatternFill, Border, Side
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 to_download: list = []  # [ [ URL, file_name ] ]
 
@@ -150,7 +153,7 @@ def make_excel():
 
         n = 40
         calc_d = {"SKU": [""]*n,
-                  "Název":            [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 2, FALSE), "")' for i in range(n)],
+                  "Název":            [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 3, FALSE), "")' for i in range(n)],
                   f"Skladem k {update_time}":          [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 7, FALSE), "")' for i in range(n)],
                   "Cena za jednotku": [f'=IFERROR(VLOOKUP(TEXT(A{i+2}, "#"),Produkty!A:H, 4, FALSE), "")' for i in range(n)],
                   "Potřebuji":        [""]*n,
@@ -302,7 +305,7 @@ if args.download:
 
 
 if args.zip:
-    passwd = input("Password: ")
+    passwd = str(os.getenv("ZIP_PASSWORD"))
 
     os.system(f'zip -P {passwd} seznam-náhradního-spotřebního-materiálu.zip {"seznam-náhradního-spotřebního-materiálu.xlsx" if args.excel else ""} {"seznam-náhradního-spotřebního-materiálu.txt" if args.txt else ""}')
 
