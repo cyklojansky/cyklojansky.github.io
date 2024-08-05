@@ -29,6 +29,7 @@ def get_csv_files():
     files = os.listdir()
     return [f for f in files if ".csv" in f]
 
+
 source_df = pd.read_csv(get_csv_files()[0])
 
 
@@ -40,9 +41,9 @@ def has_image(sku: str = "", key: str = "", row: int = -1):
     if key != "" and row != -1:
         if key in data.keys():
             return f"{data[key][row]['sku']}.webp" in images
-        
+
     return False
-    
+
 
 def clean():
     os.system("rm seznam-náhradního-spotřebního-materiálu.xlsx")
@@ -62,14 +63,14 @@ def download_images(folder: str = "product-images"):
 
 def create_picture_link(img: str):
     return f"https://cyklojansky.cz/product-images/{img}.webp"
-    #return f"https://cdn.statically.io/gh/cyklojansky/cyklojansky.github.io/gh-pages/product-images/{img}.webp"
+    # return f"https://cdn.statically.io/gh/cyklojansky/cyklojansky.github.io/gh-pages/product-images/{img}.webp"
 
 
 def make_excel():
-    
+
     os.system("rm seznam-náhradního-spotřebního-materiálu.xlsx")
 
-    source = source_df.to_dict( orient='records')
+    source = source_df.to_dict(orient='records')
 
     for s in source:
         s: dict[str, str]
@@ -95,7 +96,7 @@ def make_excel():
         c = 0
         for product in products:
             d.append({"SKU": product["sku"], "Obrázek": create_picture_link(product["sku"]) if has_image(product["sku"]) else "", "Název": f'{product["name"]}', "Cena za jednotku": f'{product["native_retail_price"]} Kč/{product["unit_name"]}', f"Skladem k {update_time}": f'{product["quantity"]} {product["unit_name"]}',
-                       "EAN": f'{product["article_number_type"].upper()}: {int(float(product["article_number"]))}' if product["article_number"] == product["article_number"] else ''})
+                      "EAN": f'{product["article_number_type"].upper()}: {int(float(product["article_number"]))}' if product["article_number"] == product["article_number"] else ''})
             c += 1
 
         group_cols[group] = c
@@ -107,15 +108,13 @@ def make_excel():
 
         price_style = NamedStyle(name="price_style", number_format='0.0" Kč"', fill=PatternFill(
             start_color="00FF00", end_color="00FF00"))
-        
+
         thin_border = Border(
             left=Side(style='thin'),
             right=Side(style='thin'),
             top=Side(style='thin'),
             bottom=Side(style='thin')
         )
-
-
 
         # Categories
         for key, df in dataFrames.items():
@@ -145,11 +144,7 @@ def make_excel():
                     sheet[f"{chr(ord('A')+x)}{y+2}"].alignment = Alignment(
                         horizontal="center" if x <= 1 else "left", vertical="center")
 
-
-
-
         # Calculator
-
 
         n = 40
         calc_d = {"SKU": [""]*n,
@@ -178,7 +173,7 @@ def make_excel():
 
         # Adjust column widths
         for col, width in {"A": 15, "B": 75, "C": 25, "D": 20, "E": 12, "F": 15, "G": 5, "H": 15, "I": 15}.items():
-        #for col, width in {"A": 15, "B": 75, "C": 20, "D": 12, "E": 15, "F": 5, "G": 15, "H": 12}.items():
+            # for col, width in {"A": 15, "B": 75, "C": 20, "D": 12, "E": 15, "F": 5, "G": 15, "H": 12}.items():
             sheet.column_dimensions[col].width = width
 
         for row in range(n+1):
@@ -200,8 +195,6 @@ def make_excel():
                 cell = sheet.cell(row=y+2, column=x+1)
                 cell.border = thin_border
                 cell.fill = fill_color
-
-
 
         # Products list
         _products = []
@@ -258,18 +251,17 @@ def make_txt():
         f.write(f"Poslední aktualizace: {update_time}")
         f.write("\n")
 
-
         for group, d in data.items():
             f.write("\n")
             f.write(f"==== {group} ====\n")
 
             for p in d:
 
-                f.write(f"{lenght(p['sku'], 20)}  ") # SKU
-                f.write(f"{lenght(p['name'], 70)}  ") # Name
-                f.write(f"{lenght(str(float(p['native_retail_price'])).replace(".0", ""), 10, "s")} Kč/{p['unit_name']} ") # Price
-                f.write(f"{lenght(str(int(p['quantity'])), 5, "s")} {p['unit_name']} ") # Quantity
-                f.write(f"{lenght(p['article_number_type'], 10, "s")}: {p['article_number'] if not math.isnan(float(p['article_number'])) else ''}\n") # EAN
+                f.write(f"{lenght(p['sku'], 20)}  ")  # SKU
+                f.write(f"{lenght(p['name'], 80)}  ")  # Name
+                f.write(f"{lenght(lenght(str(float(p['native_retail_price'])).replace(".0", "") + " Kč/" + p['unit_name'], 10, "s"), 13)} ")  # Price
+                f.write(f"{lenght(lenght(str(float(p['quantity'])).replace(".0", "") + ' ' + p['unit_name'], 7, "s"), 10)} ")  # Quantity
+                f.write(f"{lenght(p['article_number_type'], 20, "s")}: {p['article_number'] if not math.isnan(float(p['article_number'])) else ''}\n")  # EAN
 
 
 parser = argparse.ArgumentParser(description='Helper for cyklojansky.cz')
@@ -307,5 +299,5 @@ if args.download:
 if args.zip:
     passwd = str(os.getenv("ZIP_PASSWORD"))
 
-    os.system(f'zip -P {passwd} seznam-náhradního-spotřebního-materiálu.zip {"seznam-náhradního-spotřebního-materiálu.xlsx" if args.excel else ""} {"seznam-náhradního-spotřebního-materiálu.txt" if args.txt else ""}')
-
+    os.system(f'zip -P {passwd} seznam-náhradního-spotřebního-materiálu.zip {
+              "seznam-náhradního-spotřebního-materiálu.xlsx" if args.excel else ""} {"seznam-náhradního-spotřebního-materiálu.txt" if args.txt else ""}')
