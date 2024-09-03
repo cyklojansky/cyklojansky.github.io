@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /download/
+Allow: /
+
+Sitemap: https://cyklojansky.cz/sitemap.xml
+Sitemap: https://www.cyklojansky.cz/sitemap.xml

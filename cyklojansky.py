@@ -45,6 +45,8 @@ def main():
     shutil.copytree("src/products/product-images", "build/product-images")
 
     shutil.copy("src/google2cc92aae4d3f90a0.html", "build/google2cc92aae4d3f90a0.html")
+    shutil.copy("src/sitemap.xml", "build/sitemap.xml")
+    shutil.copy("src/robots.txt", "build/robots.txt")
 
     shutil.copy("CNAME", "build/CNAME")
 
