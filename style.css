@@ -803,6 +803,10 @@ video {
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
+.rounded-\[8px\] {
+  border-radius: 8px;
+}
+
 .rounded-md {
   border-radius: 0.375rem;
 }
