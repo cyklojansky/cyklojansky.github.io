@@ -1,5 +1,6 @@
 install:
 	npm install
+	pip install -r requirements.txt
 
 generate:
 	python3 cyklojansky.py
